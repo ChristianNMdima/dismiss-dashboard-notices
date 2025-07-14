@@ -10,7 +10,7 @@
  */
 
 // Enqueue admin scripts and styles
-add_action('admin_enqueue_scripts', function() {
+add_action('admin_enqueue_scripts', function () {
     if (!current_user_can('manage_options')) {
         return;
     }
@@ -39,30 +39,36 @@ add_action('admin_enqueue_scripts', function() {
 // Register plugin settings
 add_action('admin_init', function () {
     register_setting('dismiss_notices_settings', 'dismiss_notices_remember', [
-        'type' => 'boolean',
-        'default' => true,
+        'type'              => 'boolean',
+        'default'           => true,
         'sanitize_callback' => 'rest_sanitize_boolean',
     ]);
 
     add_settings_section('dismiss_notices_section', '', null, 'dismiss-notices');
 
-    add_settings_field('dismiss_notices_remember', __('Remember visibility setting after reload?', 'dismiss-dashboard-notices'), function () {
-        $checked = checked(get_option('dismiss_notices_remember', true), true, false);
-        echo "<input type='checkbox' name='dismiss_notices_remember' value='1' $checked />";
-    }, 'dismiss-notices', 'dismiss_notices_section');
+    add_settings_field(
+        'dismiss_notices_remember',
+        esc_html__('Remember visibility setting after reload?', 'dismiss-dashboard-notices'),
+        function () {
+            $checked = checked(get_option('dismiss_notices_remember', true), true, false);
+            echo '<input type="checkbox" name="dismiss_notices_remember" value="1" ' . esc_attr($checked) . ' />';
+        },
+        'dismiss-notices',
+        'dismiss_notices_section'
+    );
 });
 
 // Add menu item for settings page
 add_action('admin_menu', function () {
     add_options_page(
-        __('Dismiss Notices Settings', 'dismiss-dashboard-notices'),
-        __('Dismiss Notices', 'dismiss-dashboard-notices'),
+        esc_html__('Dismiss Notices Settings', 'dismiss-dashboard-notices'),
+        esc_html__('Dismiss Notices', 'dismiss-dashboard-notices'),
         'manage_options',
         'dismiss-notices',
         function () {
             ?>
             <div class="wrap">
-                <h1><?php _e('Dismiss Dashboard Notices – Settings', 'dismiss-dashboard-notices'); ?></h1>
+                <h1><?php echo esc_html__('Dismiss Dashboard Notices – Settings', 'dismiss-dashboard-notices'); ?></h1>
                 <form method="post" action="options.php">
                     <?php
                     settings_fields('dismiss_notices_settings');
@@ -76,9 +82,10 @@ add_action('admin_menu', function () {
     );
 });
 
+// Add "Settings" link to plugin actions
 add_filter('plugin_action_links_' . plugin_basename(__FILE__), function ($links) {
-    $settings_link = '<a href="options-general.php?page=dismiss-notices">Settings</a>';
+    $url = esc_url(admin_url('options-general.php?page=dismiss-notices'));
+    $settings_link = '<a href="' . $url . '">' . esc_html__('Settings', 'dismiss-dashboard-notices') . '</a>';
     array_unshift($links, $settings_link);
     return $links;
 });
-
