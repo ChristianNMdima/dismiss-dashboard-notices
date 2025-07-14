@@ -7,6 +7,7 @@
  * Author: Christian N Mdima
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * GitHub URI: https://github.com/ChristianNMdima/dismiss-dashboard-notices.git
 */
 
 add_action('admin_footer', function () {
