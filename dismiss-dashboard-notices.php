@@ -1,12 +1,12 @@
 <?php
 
 /**
-Plugin Name: Dismiss Dashboard Notices
-Description: Adds a button to dismiss all admin notices from the dashboard.
-Version: 1.0
-Author: Christian N Mdima
-License: GPLv2 or later
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Plugin Name: Dismiss Dashboard Notices
+ * Description: Adds a button to dismiss all admin notices from the dashboard.
+ * Version: 1.0
+ * Author: Christian N Mdima
+ * License: GPLv2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */
 
 add_action('admin_footer', function () {
